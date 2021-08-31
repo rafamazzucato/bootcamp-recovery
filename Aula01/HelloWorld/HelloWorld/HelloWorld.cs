@@ -6,7 +6,13 @@ namespace HelloWorld
     {
         static void Main(string[] argumentos)
         {
-            Console.WriteLine("Meu primeiro codigo C# manual");
+            int idade = 32;
+            bool isAdulto = true;
+            decimal valor = 10.55m;
+            double valor2 = 10.55;
+            char sigla = 'C';
+            string estado = "Sao Paulo";
+            
         }
     }
 }
