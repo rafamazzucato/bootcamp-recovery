@@ -5,6 +5,7 @@ namespace HelloWorld
     class HelloWorld
     {
         string Idade { get; set; }
+        /*
         static void Main(string[] argumentos)
         {
             string nome = null;
@@ -34,7 +35,6 @@ namespace HelloWorld
             Console.WriteLine(teste);
 
             // Switch case
-            /*
             switch(idade)
             {
                 case < 2: 
@@ -51,7 +51,7 @@ namespace HelloWorld
                     break;
             }
 
-            */
+            
 
             valor2 += 5;
             valor2 -= 5;
@@ -59,5 +59,7 @@ namespace HelloWorld
             valor2 *= 5;
 
         }
+
+        */
     }
 }
