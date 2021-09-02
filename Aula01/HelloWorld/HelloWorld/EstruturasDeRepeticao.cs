@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HelloWorld
 {
@@ -13,9 +11,13 @@ namespace HelloWorld
                 Console.WriteLine($"Argumento lido no foreach: {argumento}");
             }
 
-            for (var loops = 0; loops < argumentos.Length; loops++)
+            var idade = 1;
+            Console.WriteLine($"Idade e: {idade++}");
+            Console.WriteLine($"Idade e: {++idade}");
+
+            for (var loops = argumentos.Length; loops > 0; --loops)
             {
-                var argumento = argumentos[loops];
+                var argumento = argumentos[loops -1];
                 Console.WriteLine($"Argumento lido no for: {argumento}");
             }
 

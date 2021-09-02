@@ -5,7 +5,7 @@ namespace HelloWorld
     class HelloWorld
     {
         string Idade { get; set; }
-        /*
+        /*     
         static void Main(string[] argumentos)
         {
             string nome = null;
@@ -23,13 +23,13 @@ namespace HelloWorld
             {
                 nome.ToUpper();
             }
-            if (isAdulto != true)
+            if (!isAdulto)
             {
                 teste = "Menor de idade";
             }
-            else if(estado == "Sao Paulo")
+            else if(estado != "Sao Paulo")
             {
-                teste = "Paulista";
+                teste = "Nao e paulista";
             }
 
             Console.WriteLine(teste);
@@ -37,16 +37,17 @@ namespace HelloWorld
             // Switch case
             switch(idade)
             {
-                case < 2: 
+                
+                case 2: 
                     teste = "Nenem";
                     break;
-                case < 18: 
+                case 18: 
                     teste = "Crianca";
                     break;
-                case < 65: 
+                case 65: 
                     teste = "Adulto";
                     break;
-                default: 
+                default:
                     teste = "Melhor idade";
                     break;
             }
@@ -61,5 +62,6 @@ namespace HelloWorld
         }
 
         */
+
     }
 }
