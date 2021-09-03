@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace EntendendoOO
+namespace EntendendoOO.Models
 {
     public abstract class Pessoa
     {
         public int Id;
         public string Nome;
     }
+
 }
