@@ -118,7 +118,6 @@ namespace EntendendoOO
 
                 pagamento.EfetuarPagamento();
             }
-            
             catch (FormatException)
             {
                 Console.WriteLine("Forma de pagamento invalida erro na formatacao, refaca o procedimento");
