@@ -66,7 +66,6 @@ namespace LeitorDeCsv
                                 }
                             }
 
-
                             Console.WriteLine("Concluindo leitura do arquivo:" + arquivo);
                             Console.WriteLine("----------------------------------");
                         }
