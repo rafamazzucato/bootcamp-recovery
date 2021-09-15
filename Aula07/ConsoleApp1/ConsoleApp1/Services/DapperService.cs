@@ -11,9 +11,16 @@ namespace ConsoleApp1.Services
 {
     class DapperService
     {
-        public static void ConsultarLinhas(string conexao)
+        private string Conexao;
+
+        public DapperService(string conexao)
         {
-            using(var db = new SqlConnection(conexao))
+            Conexao = conexao;
+        }
+
+        public void ConsultarLinhas()
+        {
+            using(var db = new SqlConnection(Conexao))
             {
                 var alunos = db.Query<Aluno>("Select ID, NOME, DATA_NASCIMENTO as DataNascimento, RG From TB_ALUNO").ToList();
 
@@ -24,7 +31,7 @@ namespace ConsoleApp1.Services
             }
         }
 
-        public static void CriarAluno(string conexao)
+        public void CriarAluno()
         {
             var aluno = ObterDadosAluno();
 
@@ -33,7 +40,7 @@ namespace ConsoleApp1.Services
                 return;
             }
 
-            using (var db = new SqlConnection(conexao))
+            using (var db = new SqlConnection(Conexao))
             {
                 var query = @"INSERT INTO TB_ALUNO (NOME, DATA_NASCIMENTO, RG)
                                     VALUES (@Nome, @DataNascimento, @Rg)";
@@ -43,7 +50,7 @@ namespace ConsoleApp1.Services
             }
         }
 
-        public static void AtualizarAluno(string conexao)
+        public void AtualizarAluno()
         {
             int id = CapturarInformacoesInt("Id", null, null);
             if(id == 0) { return; }
@@ -57,7 +64,7 @@ namespace ConsoleApp1.Services
 
             aluno.Id = id;
 
-            using (var db = new SqlConnection(conexao))
+            using (var db = new SqlConnection(Conexao))
             {
                 var query = @"UPDATE TB_ALUNO SET Nome=@Nome, DATA_NASCIMENTO=@DataNascimento,RG=@Rg Where ID=@Id";
                 db.Execute(query, aluno);
@@ -67,12 +74,12 @@ namespace ConsoleApp1.Services
         }
 
 
-        public static void RemoverAluno(string conexao)
+        public void RemoverAluno()
         {
             int id = CapturarInformacoesInt("Id", null, null);
             if (id == 0) { return; }
 
-            using (var db = new SqlConnection(conexao))
+            using (var db = new SqlConnection(Conexao))
             {
                 var query = @"DELETE FROM TB_ALUNO WHERE ID="+id;
                 db.Execute(query);
@@ -81,7 +88,7 @@ namespace ConsoleApp1.Services
             }
         }
 
-        private static Aluno ObterDadosAluno()
+        private Aluno ObterDadosAluno()
         {
             Console.WriteLine("Informe qual o nome do aluno atualizado:");
             var nome = Console.ReadLine();
@@ -112,7 +119,7 @@ namespace ConsoleApp1.Services
             return aluno;
         }
 
-        private static int CapturarInformacoesInt(string tipoDeInfo, int? valorMinimo, int? valorMaximo)
+        private int CapturarInformacoesInt(string tipoDeInfo, int? valorMinimo, int? valorMaximo)
         {
             var mensagem = $"Informe qual o {tipoDeInfo} do usuario";
             if(valorMinimo != null || valorMaximo != null)

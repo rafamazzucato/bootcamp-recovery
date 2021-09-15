@@ -29,19 +29,21 @@ namespace ConsoleApp1
                 var opcaoStr = Console.ReadLine();
                 var opcao = int.Parse(opcaoStr);
 
+                var service = new DapperService(conexao);
+
                 switch (opcao)
                 {
                     case 1:
-                        DapperService.ConsultarLinhas(conexao);
+                        service.ConsultarLinhas();
                         break;
                     case 2:
-                        DapperService.CriarAluno(conexao);
+                        service.CriarAluno();
                         break;
                     case 3:
-                        DapperService.AtualizarAluno(conexao);
+                        service.AtualizarAluno();
                         break;
                     case 4:
-                        DapperService.RemoverAluno(conexao);
+                        service.RemoverAluno();
                         break;
                     default:
                         Console.WriteLine("Opcao informada nao e valida, tente novamente!");
