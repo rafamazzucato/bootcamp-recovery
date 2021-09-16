@@ -73,7 +73,6 @@ namespace ConsoleApp1.Services
             }
         }
 
-
         public void RemoverAluno()
         {
             int id = CapturarInformacoesInt("Id", null, null);
