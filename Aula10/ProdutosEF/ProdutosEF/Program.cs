@@ -3,6 +3,7 @@ using ProdutosEF.Repositories;
 using ProdutosEF.Repositories.Impl;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ProdutosEF
 {
@@ -41,6 +42,12 @@ namespace ProdutosEF
                         case 2:
                             SolicitarProdutosEUsuario();
                             break;
+                        case 3:
+                            ObterVendasPorUsuario();
+                            break;
+                        case 4:
+                            ObterItensPorProduto();
+                            break;
                         default:
                             Console.WriteLine("Opcao informada nao e valida, tente novamente!");
                             break;
@@ -61,6 +68,34 @@ namespace ProdutosEF
             }
         }
 
+        private static void ObterItensPorProduto()
+        {
+            var resultado = _produtoRepository.ObterItensPorProduto();
+            foreach (var dto in resultado)
+            {
+                Console.WriteLine("--------------------------------------------------");
+                Console.WriteLine($"Produto: {dto.Nome} foi vendido {dto.ItensDoProdutoVendido.Sum(e => e.Quantidade)} itens");
+                foreach (var item in dto.ItensDoProdutoVendido)
+                {
+                    Console.WriteLine($"Item: {item.Id} quantidade: {item.Quantidade}");
+                }
+            }
+        }
+
+        private static void ObterVendasPorUsuario()
+        {
+            var resultado = _vendaRepository.ObterVendasPorUsuario();
+            foreach (var dto in resultado)
+            {
+                Console.WriteLine("--------------------------------------------------");
+                Console.WriteLine($"Usuario: {dto.Nome} vendeu {dto.QtdDeVendas} vendas no valor total de R$ {dto.ValorToralVendas}");
+                foreach(var venda in dto.Vendas)
+                {
+                    Console.WriteLine($"Venda: {venda.Id} valor R$ {venda.Total}");
+                }
+            }
+        }
+
         private static void SolicitarProdutosEUsuario()
         {
             Console.WriteLine("--------------------------------------------------");
@@ -74,35 +109,56 @@ namespace ProdutosEF
                 return;
             }
 
-            var idProduto = CapturarInformacoesInt("Id do produto", null, null);
-            var produto = _produtoRepository.SelecionarProdutoPorId(idProduto);
-            if(produto == null)
+            bool permanecerRodando = true;
+            int idProduto;
+            int qtdItem;
+            Produto produto;
+            Venda venda = null;
+            VendaItem item;
+            do
             {
-                Console.WriteLine("Produto informado nao encontrado! ");
-                return;
-            }
-            
-            var qtdItem = CapturarInformacoesInt("Quantidade de itens vendidos", 1, 100);
-            if (qtdItem == 0)
-            {
-                Console.WriteLine("Quantidade invalida ");
-                return;
-            }
+                idProduto = CapturarInformacoesInt("Id do produto", null, null);
+                produto = _produtoRepository.SelecionarProdutoPorId(idProduto);
+                if (produto == null)
+                {
+                    Console.WriteLine("Produto informado nao encontrado! ");
+                    return;
+                }
 
-            Venda venda = new Venda();
-            venda.IdUsuario = idUsuario;
-            venda.Total = produto.Valor * qtdItem;
+                qtdItem = CapturarInformacoesInt("Quantidade de itens vendidos", 1, 100);
+                if (qtdItem == 0)
+                {
+                    Console.WriteLine("Quantidade invalida ");
+                    return;
+                }
 
-            _vendaRepository.Salvar(venda);
+                if(venda == null)
+                {
+                    venda = new Venda();
+                    venda.IdUsuario = idUsuario;
+                    _vendaRepository.Salvar(venda);
+                }
+                
+                item = new VendaItem()
+                {
+                    IdProduto = idProduto,
+                    Quantidade = qtdItem,
+                    IdVenda = venda.Id
+                };
 
-            var item = new VendaItem()
-            {
-                IdProduto = idProduto,
-                Quantidade = qtdItem,
-                IdVenda = venda.Id
-            };
+                _vendaItemRepository.Salvar(item);
 
-            _vendaItemRepository.Salvar(item);
+                venda.Total += produto.Valor * qtdItem;
+
+                Console.WriteLine("Compra concluida? (S - Sim / N - Nao)");
+                var compraConcluida = Console.ReadLine();
+                if(compraConcluida.Trim().ToUpper() == "S" || compraConcluida.Trim().ToUpper() == "SIM"){
+                    permanecerRodando = false;
+                }
+
+            } while (permanecerRodando == true);
+
+            _vendaRepository.Atualizar(venda);
 
             Console.WriteLine("Compra concluida");
             Console.WriteLine("--------------------------------------------------");
