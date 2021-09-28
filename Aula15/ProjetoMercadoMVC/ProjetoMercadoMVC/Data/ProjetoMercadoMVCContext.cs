@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ProjetoMercadoMVC.Models;
 
 namespace ProjetoMercadoMVC.Data
 {
-    public class ProjetoMercadoMVCContext : DbContext
+    public class ProjetoMercadoMVCContext : IdentityDbContext
     {
         public ProjetoMercadoMVCContext (DbContextOptions<ProjetoMercadoMVCContext> options)
             : base(options)
         {
         }
-
-        public DbSet<ProjetoMercadoMVC.Models.Usuario> Usuario { get; set; }
 
         public DbSet<ProjetoMercadoMVC.Models.Produto> Produto { get; set; }
 

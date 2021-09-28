@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,8 @@ using ProjetoMercadoMVC.Models;
 namespace ProjetoMercadoMVC.Controllers
 {
     [Controller]
-    [Route("[controller]")]
+    [Route("/")]
+    //[Authorize]
     public class VendasController : Controller
     {
         private readonly ProjetoMercadoMVCContext _context;
@@ -50,7 +52,7 @@ namespace ProjetoMercadoMVC.Controllers
         [Route("Create")]
         public IActionResult Create()
         {
-            ViewData["IdUsuario"] = new SelectList(_context.Usuario, "Id", "Nome");
+            //ViewData["IdUsuario"] = new SelectList(_context., "Id", "Nome");
             ViewData["Produtos"] = new SelectList(_context.Produto, "Id", "Nome");
             return View();
         }
@@ -96,7 +98,7 @@ namespace ProjetoMercadoMVC.Controllers
                 {
                     venda = new Venda()
                     {
-                        IdUsuario = idUsuario,
+                        //IdUsuario = idUsuario,
                         Total = produto.Valor * quantidade
                     };
 
@@ -125,12 +127,12 @@ namespace ProjetoMercadoMVC.Controllers
 
             if(venda != null)
             {
-                ViewData["IdUsuario"] = new SelectList(_context.Usuario, "Id", "Nome", venda.IdUsuario);
+                //ViewData["IdUsuario"] = new SelectList(_context.Usuario, "Id", "Nome", venda.IdUsuario);
                 vendaAtualizada = await getVendaAtualizada(venda.Id);
             }
             else
             {
-                ViewData["IdUsuario"] = new SelectList(_context.Usuario, "Id", "Nome");
+                //ViewData["IdUsuario"] = new SelectList(_context.Usuario, "Id", "Nome");
             }
 
             return View(vendaAtualizada);
