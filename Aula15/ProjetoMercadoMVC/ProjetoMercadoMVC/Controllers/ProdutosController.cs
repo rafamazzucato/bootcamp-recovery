@@ -26,6 +26,11 @@ namespace ProjetoMercadoMVC.Controllers
         // GET: Produtos
         public async Task<IActionResult> Index()
         {
+            if (!User.Identity.IsAuthenticated || !User.IsInRole("ADMIN"))
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+
             return View(await _context.Produto.ToListAsync());
         }
 
@@ -33,6 +38,11 @@ namespace ProjetoMercadoMVC.Controllers
         [Route("Details/{id}")]
         public async Task<IActionResult> Details(int? id)
         {
+            if (!User.Identity.IsAuthenticated || !User.IsInRole("ADMIN"))
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+
             if (id == null)
             {
                 return NotFound();
@@ -52,6 +62,11 @@ namespace ProjetoMercadoMVC.Controllers
         [Route("Create")]
         public IActionResult Create()
         {
+            if (!User.Identity.IsAuthenticated || !User.IsInRole("ADMIN"))
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+
             return View();
         }
 
@@ -63,6 +78,11 @@ namespace ProjetoMercadoMVC.Controllers
         [Route("Create")]
         public async Task<IActionResult> Create(int id, string nome, DateTime dataValidade, string valorDigitado)
         {
+            if (!User.Identity.IsAuthenticated || !User.IsInRole("ADMIN"))
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+
             var valorConvertido = valorDigitado.Replace(".", ",");
             var produto = new Produto()
             {
@@ -86,6 +106,11 @@ namespace ProjetoMercadoMVC.Controllers
         [Route("Edit/{id}")]
         public async Task<IActionResult> Edit(int? id)
         {
+            if (!User.Identity.IsAuthenticated || !User.IsInRole("ADMIN"))
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+
             if (id == null)
             {
                 return NotFound();
@@ -110,6 +135,11 @@ namespace ProjetoMercadoMVC.Controllers
         [Route("Edit/{id}")]
         public async Task<IActionResult> Edit(int id, string nome, DateTime dataValidade, string valorAExibir)
         {
+            if (!User.Identity.IsAuthenticated || !User.IsInRole("ADMIN"))
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+
             var valorConvertido = valorAExibir.Replace(".", ",");
             var produto = new Produto()
             {
@@ -146,6 +176,11 @@ namespace ProjetoMercadoMVC.Controllers
         [Route("Delete/{id}")]
         public async Task<IActionResult> Delete(int? id)
         {
+            if (!User.Identity.IsAuthenticated || !User.IsInRole("ADMIN"))
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+
             if (id == null)
             {
                 return NotFound();
@@ -167,6 +202,11 @@ namespace ProjetoMercadoMVC.Controllers
         [Route("Delete/{id}")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (!User.Identity.IsAuthenticated || !User.IsInRole("ADMIN"))
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+
             var produto = await _context.Produto.FindAsync(id);
             _context.Produto.Remove(produto);
             await _context.SaveChangesAsync();
