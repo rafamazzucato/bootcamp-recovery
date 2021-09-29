@@ -1,0 +1,14 @@
+* Adicionar Identity no projeto
+* Atualizar o banco com os dados do Identity
+* Atualizar os modelos do projeto para considerar o User do Identity e nao a tabela de Usuario (deletar todas as referencias do usuario)
+* Atualizar o banco de dados com a nova FK
+* Atualizar o layout com os dados do Identity
+* Atualizar o Startup com as configs de Identity e Roles
+* Privar no layouyt as rotas nao logadas e por role
+* Atualizar o register para cadastrar o usuario com role de User
+* Testar login e links de acordo com a Role (criar mais de um user pelo menos um de cada role ADMIN/USER)
+* Privar o Controler de Produtos para somente autenticado e ADMIN
+* Privar o Controller de Vendas para somente autenticado
+* Alterar o Controller de Vendas para quando for user listar somente suas vendas e o editar so visualizar suas vendas (alterar controller e view omitir o campo de usuario quandop nao for admin)
+* Alterar a acao e tela de criacao para considerar o usuario logado ao criar a venda
+* Testar todas as acoes
