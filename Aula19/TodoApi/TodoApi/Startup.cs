@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TodoApi.Models;
+using TodoApi.Repository;
+using TodoApi.Repository.Impl;
 
 namespace TodoApi
 {
@@ -36,6 +38,9 @@ namespace TodoApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TodoApi", Version = "v1" });
             });
+
+            services.AddScoped<TodoItemRepository, TodoItemRepositoryImpl>();
+            services.AddScoped<ITeste, TesteImpl>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
