@@ -9,7 +9,7 @@ namespace TodoApi.Repository.Impl
 {
     public class TodoItemRepositoryImpl : TodoItemRepository
     {
-        private TodoApiDbContext _context;
+        private readonly TodoApiDbContext _context;
 
         public TodoItemRepositoryImpl(TodoApiDbContext context)
         {

@@ -31,6 +31,7 @@ namespace TodoApi.Controllers
             return await _repository.Listar();
         }
 
+        // GET: api/TodoItem/tarefasEmAberto
         [HttpGet("tarefasEmAberto")]
         public async Task<ActionResult<IEnumerable<TodoItem>>> OpenedTodos()
         {
